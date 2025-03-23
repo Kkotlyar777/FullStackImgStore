@@ -1,5 +1,13 @@
+import { Role } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { IsArray, IsEmail, IsInt, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -20,4 +28,10 @@ export class CreateUserDto {
   @IsInt({ each: true }) // Каждый элемент массива - число
   @Type(() => Number) // Преобразование входных данных в число
   image_id_list?: number[];
+
+  @IsEnum(Role)
+  @IsOptional()
+  role?: Role;
 }
+
+export type UpdateUserDto = Partial<CreateUserDto>;

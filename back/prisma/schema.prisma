@@ -27,4 +27,12 @@ model User {
   email    String  @unique
   password String
   image_id_list Int[]
+  crearedAt DateTime @default(now())
+updateAt DateTime @updatedAt
+
+role Role @default(USER)
+}
+enum Role{
+  USER 
+  ADMIN
 }

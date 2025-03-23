@@ -4,7 +4,7 @@ import styles from './page.module.css'
 const Home = async () => {
   const fetchData = async () => {
     try {
-      const data = await fetch('http://localhost:3001/image/13', {
+      const data = await fetch('http://localhost:3001/image/15', {
         method: 'GET',
       })
 

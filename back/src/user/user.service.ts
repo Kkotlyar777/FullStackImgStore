@@ -6,6 +6,7 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '@prisma/client';
+import { hash } from 'argon2';
 
 @Injectable()
 export class UserService {
@@ -32,12 +33,28 @@ export class UserService {
           password: dto.password,
           nick_name: dto.nick_name,
           email: dto.email,
+          role: dto.role,
         },
       });
     });
   }
+  async create({ password, ...dto }: CreateUserDto) {
+    const user = {
+      ...dto,
+      password: await hash(password),
+    };
+
+    return this.prisma.user.create({ data: user });
+  }
   async getUserById(id: number): Promise<User | null> {
     const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+  }
+  async getUserByEmail(email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
     if (!user) {
       throw new NotFoundException('User not found');
     }
