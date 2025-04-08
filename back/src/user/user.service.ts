@@ -30,7 +30,7 @@ export class UserService {
         data: {
           image_id_list: dto.image_id_list,
           avatar_url: dto?.avatar_url,
-          password: dto.password,
+          password: await hash(dto.password),
           nick_name: dto.nick_name,
           email: dto.email,
           role: dto.role,

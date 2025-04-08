@@ -14,7 +14,7 @@ import { Role } from '@prisma/client';
 @Injectable()
 export class AuthService {
   EXPIRE_DAY_REFRESH = 1;
-  REFRESG_TOKEN_NAME = 'refreshToken';
+  REFRESH_TOKEN_NAME = 'refreshToken';
   constructor(
     private prisma: PrismaService,
     private jwt: JwtService,
@@ -72,7 +72,7 @@ export class AuthService {
   addRefreshTokenResponse(res: Response, refreshToken: string) {
     const expiresIn = new Date();
     expiresIn.setDate(expiresIn.getDate() + this.EXPIRE_DAY_REFRESH);
-    res.cookie(this.REFRESG_TOKEN_NAME, refreshToken, {
+    res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
       httpOnly: true,
       domain: 'localhost',
       expires: expiresIn,
@@ -81,7 +81,7 @@ export class AuthService {
     });
   }
   removeRefreshTokenResponse(res: Response) {
-    res.cookie(this.REFRESG_TOKEN_NAME, '', {
+    res.cookie(this.REFRESH_TOKEN_NAME, '', {
       httpOnly: true,
       domain: 'localhost',
       expires: new Date(0),

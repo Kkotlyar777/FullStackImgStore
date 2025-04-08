@@ -58,7 +58,7 @@ export default function pageClientcreate() {
         placeholder='Введите avatar_url'
       />
       <input
-        type='text'
+        type='password'
         onChange={(e) => setStatepassword(e.target.value)}
         placeholder='Введите password'
       />
